@@ -70,8 +70,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./src/js/modules/slider/slider.js");
 
 class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
+<<<<<<< HEAD
   constructor(page, btns) {
     super(page, btns);
+=======
+  constructor(btns) {
+    super(btns);
+>>>>>>> lesson-5
   }
   showSlides(n) {
     if (n > this.slides.length) {
@@ -120,6 +125,111 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 /***/ }),
 
+<<<<<<< HEAD
+=======
+/***/ "./src/js/modules/slider/slider-mini.js":
+/*!**********************************************!*\
+  !*** ./src/js/modules/slider/slider-mini.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ MiniSlider)
+/* harmony export */ });
+/* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./src/js/modules/slider/slider.js");
+
+class MiniSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor(container, next, prev, activeClass, animate, autoplay) {
+    super(container, next, prev, activeClass, animate, autoplay);
+  }
+  decorizeSlides() {
+    let slides = this.container.children; // всегда содержит актуальный список элементов
+
+    Array.from(slides).forEach(slide => {
+      slide.classList.remove(this.activeClass);
+      if (this.animate) {
+        let title = slide.querySelector('.card__title');
+        let arrow = slide.querySelector('.card__controls-arrow');
+        if (title) {
+          title.style.opacity = '.4';
+        }
+        if (arrow) {
+          arrow.style.opacity = '.4';
+        }
+      }
+    });
+    if (!slides[0].closest('button')) {
+      slides[0].classList.add(this.activeClass);
+    }
+    if (this.animate) {
+      let title = slides[0].querySelector('.card__title');
+      let arrow = slides[0].querySelector('.card__controls-arrow');
+      if (title) {
+        title.style.opacity = '1';
+      }
+      if (arrow) {
+        arrow.style.opacity = '1';
+      }
+    }
+  }
+  nextSlide() {
+    let slides = this.container.children; // всегда содержит актуальный список элементов
+
+    if (slides[1] && slides[1].tagName === 'BUTTON' && slides[2] && slides[2].tagName === 'BUTTON') {
+      this.container.appendChild(this.container.children[0]); // slide
+      this.container.appendChild(this.container.children[1]); // btn
+      this.container.appendChild(this.container.children[2]); // btn
+    } else if (slides[1] && slides[1].tagName == 'BUTTON') {
+      this.container.appendChild(this.container.children[0]); // slide
+      this.container.appendChild(this.container.children[1]); // btn
+    } else {
+      this.container.appendChild(slides[0]);
+    }
+    this.decorizeSlides();
+  }
+  bindTriggers() {
+    let slides = this.container.children; // всегда содержит актуальный список элементов
+
+    this.next.addEventListener('click', () => {
+      // this.container.appendChild(this.slides[0]); // код Ивана, не работает
+
+      this.nextSlide();
+    });
+    this.prev.addEventListener('click', () => {
+      // let active = this.slides[this.slides.length - 1]; // код Ивана, не работает
+      // this.container.insertBefore(active, this.slides[0]); // пояснение ниже
+      // this.slides создаётся один раз в constructor, а потом не обновляется
+      // когда перемещаешь элементы (appendChild / insertBefore), this.slides остаётся неизменным, и индексы ломаются
+
+      for (let i = slides.length - 1; i > 0; i--) {
+        if (slides[i].tagName !== 'BUTTON') {
+          let active = slides[i];
+          this.container.insertBefore(active, slides[0]);
+          this.decorizeSlides();
+          break;
+        }
+      }
+    });
+  }
+  init() {
+    this.container.style.cssText = `
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      align-items: flex-start;
+    `;
+    this.bindTriggers();
+    this.decorizeSlides();
+    if (this.autoplay) {
+      setInterval(() => this.nextSlide(), 5000);
+    }
+  }
+}
+
+/***/ }),
+
+>>>>>>> lesson-5
 /***/ "./src/js/modules/slider/slider.js":
 /*!*****************************************!*\
   !*** ./src/js/modules/slider/slider.js ***!
@@ -132,6 +242,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 class Slider {
   constructor({
+<<<<<<< HEAD
     page = '',
     btns = '',
     next = '',
@@ -144,6 +255,28 @@ class Slider {
     if (!this.page) {
       throw new Error(`Элемент с селектором "${page}" не найден`);
     }
+=======
+    container = null,
+    btns = null,
+    next = null,
+    prev = null,
+    activeClass = '',
+    animate,
+    autoplay
+  } = {}) {
+    this.container = document.querySelector(container);
+    if (!this.container) {
+      throw new Error(`Элемент с селектором "${container}" не найден`);
+    }
+    this.slides = Array.from(this.container.children);
+    this.btns = document.querySelectorAll(btns);
+    this.prev = document.querySelector(prev);
+    this.next = document.querySelector(next);
+    this.activeClass = activeClass;
+    this.animate = animate;
+    this.autoplay = autoplay;
+    this.slideIndex = 1;
+>>>>>>> lesson-5
   }
 }
 
@@ -213,16 +346,51 @@ var __webpack_exports__ = {};
   \************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider/slider-main */ "./src/js/modules/slider/slider-main.js");
+<<<<<<< HEAD
 /* harmony import */ var _modules_playVideo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/playVideo */ "./src/js/modules/playVideo.js");
+=======
+/* harmony import */ var _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider/slider-mini */ "./src/js/modules/slider/slider-mini.js");
+/* harmony import */ var _modules_playVideo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/playVideo */ "./src/js/modules/playVideo.js");
+
+>>>>>>> lesson-5
 
 
 window.addEventListener('DOMContentLoaded', () => {
   const slider = new _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_0__["default"]({
+<<<<<<< HEAD
     page: '.page',
     btns: '.next'
+=======
+    btns: '.next',
+    container: '.page'
+>>>>>>> lesson-5
   });
   slider.render();
-  const player = new _modules_playVideo__WEBPACK_IMPORTED_MODULE_1__["default"]('.showup .play', '.overlay');
+  const showUpSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
+    container: '.showup__content-slider',
+    prev: '.showup__prev',
+    next: '.showup__next',
+    activeClass: 'card-active',
+    animate: true
+  });
+  showUpSlider.init();
+  const modulesSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
+    container: '.modules__content-slider',
+    prev: '.modules__info-btns .slick-prev',
+    next: '.modules__info-btns .slick-next',
+    activeClass: 'card-active',
+    animate: true,
+    autoplay: true
+  });
+  modulesSlider.init();
+  const feedSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
+    container: '.feed__slider',
+    prev: '.feed__slider .slick-prev',
+    next: '.feed__slider .slick-next',
+    activeClass: 'feed__item-active'
+  });
+  feedSlider.init();
+  const player = new _modules_playVideo__WEBPACK_IMPORTED_MODULE_2__["default"]('.showup .play', '.overlay');
   player.init();
 });
 })();

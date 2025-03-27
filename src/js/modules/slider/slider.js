@@ -1,13 +1,24 @@
 export default class Slider {
-  constructor({page = '', btns = '', next = '', prev = ''} = {}) {
-    this.page = document.querySelector(page);
-    this.slides = Array.from(this.page.children);
-    this.btns = document.querySelectorAll(btns);
-    this.slideIndex = 1;
+  constructor({ container = null,
+    btns = null,
+    next = null,
+    prev = null,
+    activeClass = '',
+    animate,
+    autoplay } = {}) {
+    this.container = document.querySelector(container);
 
-    if (!this.page) {
-      throw new Error(`Элемент с селектором "${page}" не найден`);
+    if (!this.container) {
+      throw new Error(`Элемент с селектором "${container}" не найден`);
     }
-  }
 
+    this.slides = Array.from(this.container.children);
+    this.btns = document.querySelectorAll(btns);
+    this.prev = document.querySelector(prev);
+    this.next = document.querySelector(next);
+    this.activeClass = activeClass;
+    this.animate = animate;
+    this.autoplay = autoplay;
+    this.slideIndex = 1;
+  }
 }
