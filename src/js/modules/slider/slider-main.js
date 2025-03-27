@@ -1,13 +1,8 @@
-export default class Slider {
-  constructor(page, btns) {
-    this.page = document.querySelector(page);
-    this.slides = Array.from(this.page.children);
-    this.btns = document.querySelectorAll(btns);
-    this.slideIndex = 1;
+import Slider from './slider';
 
-    if (!this.page) {
-      throw new Error(`Элемент с селектором "${page}" не найден`);
-    }
+export default class MainSlider extends Slider {
+  constructor(btns) {
+    super(btns);
   }
 
   showSlides(n) {
