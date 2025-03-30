@@ -8,11 +8,11 @@ export default class Slider {
     autoplay } = {}) {
     this.container = document.querySelector(container);
 
-    if (!this.container) {
-      throw new Error(`Элемент с селектором "${container}" не найден`);
-    }
+    try {
+      this.slides = Array.from(this.container.children);
+    } catch(e) {
 
-    this.slides = Array.from(this.container.children);
+    }
     this.btns = document.querySelectorAll(btns);
     this.prev = document.querySelector(prev);
     this.next = document.querySelector(next);
